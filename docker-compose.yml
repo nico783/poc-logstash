@@ -1,6 +1,25 @@
 version: '3.2'
 
 services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - 3306:3306
+    networks:
+      - elk
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - elk
+
   elasticsearch:
     build:
       context: elasticsearch/
@@ -51,6 +70,7 @@ services:
       - elk
     depends_on:
       - elasticsearch
+      - mysql
 
   kibana:
     build:

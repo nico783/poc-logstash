@@ -4,4 +4,5 @@ ARG ELK_VERSION
 FROM docker.elastic.co/logstash/logstash:${ELK_VERSION}
 
 # Add your logstash plugins setup here
-# Example: RUN logstash-plugin install logstash-filter-json
+COPY mysql-connector-java-8.0.26.jar /usr/share/logstash/logstash-core/lib/jars
+RUN logstash-plugin install logstash-integration-jdbc
